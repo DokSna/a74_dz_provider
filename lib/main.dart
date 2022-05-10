@@ -31,10 +31,33 @@ class MyApp extends StatelessWidget {
                 width: 200,
                 height: 200,
               ),
+              const Switcher(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class Switcher extends StatefulWidget {
+  const Switcher({Key? key}) : super(key: key);
+
+  @override
+  State<Switcher> createState() => _SwitcherState();
+}
+
+class _SwitcherState extends State<Switcher> {
+  bool _giveVerse = true;
+  @override
+  Widget build(BuildContext context) {
+    return Switch(
+      value: _giveVerse,
+      onChanged: (value) {
+        setState(() {
+          _giveVerse = value;
+        });
+      },
     );
   }
 }
