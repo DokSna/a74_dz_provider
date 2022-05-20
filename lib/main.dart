@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
 
+// 1. Создаём класс на основе "ChangeNotifier". Засунем его потом в "context".
 class RandomColor extends ChangeNotifier {
   bool _switchStatus;
   Color _titleColor;
@@ -22,6 +23,7 @@ class RandomColor extends ChangeNotifier {
 }
 
 class MyApp extends StatelessWidget {
+  // 2. Создаём объект - экземпляр класса, который в контекст запихнём.
   RandomColor newRandomColor = RandomColor(
       true,
       const Color.fromRGBO(255, 215, 0, 1),
@@ -31,9 +33,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 3. В "ChangeNotifierProvider" заворачиваем то, что нужно обновлять/перестраивать.
     return ChangeNotifierProvider<RandomColor>(
+      // 4. Засовываем наш объект класса "ChangeNotifier" в новый "контекст"
       create: ((context) => newRandomColor),
       child: const MaterialApp(
+        // 5. Чтоб "новый контекст" заработал, нужно новый "билд".
+        // Поэтому выносим остальной код в отдельный виджет.
         home: HomePage(),
       ),
     );
@@ -44,6 +50,7 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
+  // 6. Вот сдесь уже нужный нам контекст содержащий объект нашего "ChangeNotifier" класса.
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
